@@ -3,13 +3,15 @@ import { useLocation, usePrayerTimes, getCurrentPrayer } from "@/hooks/use-praye
 import { useState, useEffect } from "react";
 import islamicPatternBg from "@/assets/islamic-pattern-header.jpg";
 
+import { Sunrise, Sun, CloudSun, Sunset, Moon } from "lucide-react";
+
 const prayerNames = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"] as const;
-const prayerIcons: Record<string, string> = {
-  Fajr: "🌅",
-  Dhuhr: "☀️",
-  Asr: "🌤️",
-  Maghrib: "🌇",
-  Isha: "🌙",
+const prayerIcons: Record<string, React.ReactNode> = {
+  Fajr: <Sunrise size={20} className="text-amber-500" />,
+  Dhuhr: <Sun size={20} className="text-orange-400" />,
+  Asr: <CloudSun size={20} className="text-accent" />,
+  Maghrib: <Sunset size={20} className="text-orange-500" />,
+  Isha: <Moon size={20} className="text-accent" />,
 };
 
 export default function PrayerPage() {
@@ -80,7 +82,9 @@ export default function PrayerPage() {
                 } ${isActive ? "border-l-4 border-l-primary/70 bg-primary/5" : ""}`}
             >
               <div className="flex items-center gap-3">
-                <span className="text-xl">{prayerIcons[name]}</span>
+                <div className="w-10 h-10 rounded-full bg-secondary/50 flex items-center justify-center shrink-0">
+                  {prayerIcons[name]}
+                </div>
                 <div>
                   <h3 className="font-semibold text-foreground text-sm">{name}</h3>
                   {isActive && <span className="text-[10px] text-primary font-medium uppercase">Current</span>}
