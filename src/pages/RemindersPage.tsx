@@ -29,7 +29,7 @@ export default function RemindersPage() {
       <div className="islamic-card p-4">
         <div className="h-2 bg-muted rounded-full overflow-hidden">
           <motion.div
-            className="h-full emerald-gradient rounded-full"
+            className="h-full primary-gradient rounded-full shadow-[0_0_10px_hsl(var(--primary)/0.2)]"
             animate={{ width: `${total > 0 ? (completed / total) * 100 : 0}%` }}
             transition={{ duration: 0.5 }}
           />
@@ -47,7 +47,7 @@ export default function RemindersPage() {
         />
         <button
           onClick={handleAdd}
-          className="w-10 h-10 rounded-xl emerald-gradient text-primary-foreground flex items-center justify-center shrink-0"
+          className="w-10 h-10 rounded-xl primary-gradient text-primary-foreground flex items-center justify-center shrink-0"
         >
           <Plus size={20} />
         </button>
@@ -67,8 +67,8 @@ export default function RemindersPage() {
             <button
               onClick={() => toggleReminder(reminder.id)}
               className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-all ${reminder.completed
-                  ? "bg-emerald-brand text-primary-foreground"
-                  : "border-2 border-border"
+                ? "bg-primary text-primary-foreground"
+                : "border-2 border-border"
                 }`}
             >
               {reminder.completed ? <Check size={14} /> : <Circle size={14} className="text-transparent" />}

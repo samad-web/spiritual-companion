@@ -3,10 +3,16 @@ import { useTheme } from "@/hooks/use-theme";
 import { useTasbeeh } from "@/hooks/use-tasbeeh";
 import { Moon, Sun, RotateCcw, MapPin, Bell } from "lucide-react";
 import { useState } from "react";
+import { useLocation, usePrayerTimes } from "@/hooks/use-prayer";
+import { useAdhan } from "@/hooks/use-adhan";
 
 export default function SettingsPage() {
   const { isDark, toggle } = useTheme();
   const { reset } = useTasbeeh();
+  const { location } = useLocation();
+  const { prayerData } = usePrayerTimes(location);
+  const { isEnabled: adhanEnabled, toggleAdhan, isUnlocked, unlockAudio } = useAdhan(prayerData?.timings);
+
   const [notifications, setNotifications] = useState(() => {
     const saved = localStorage.getItem("prayer-notifications");
     return saved ? JSON.parse(saved) : { Fajr: true, Dhuhr: true, Asr: true, Maghrib: true, Isha: true };
@@ -26,7 +32,7 @@ export default function SettingsPage() {
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="islamic-card p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            {isDark ? <Moon size={20} className="text-gold" /> : <Sun size={20} className="text-gold" />}
+            {isDark ? <Moon size={20} className="text-accent" /> : <Sun size={20} className="text-accent" />}
             <div>
               <p className="text-sm font-medium text-foreground">Theme</p>
               <p className="text-xs text-muted-foreground">{isDark ? "Dark Mode" : "Light Mode"}</p>
@@ -54,7 +60,7 @@ export default function SettingsPage() {
         className="islamic-card p-4"
       >
         <div className="flex items-center gap-2 mb-4">
-          <Bell size={18} className="text-emerald-brand" />
+          <Bell size={18} className="text-primary" />
           <h3 className="text-sm font-semibold text-foreground">Prayer Notifications</h3>
         </div>
         <div className="space-y-3">
@@ -63,7 +69,7 @@ export default function SettingsPage() {
               <span className="text-sm text-foreground">{prayer}</span>
               <button
                 onClick={() => toggleNotification(prayer)}
-                className={`w-10 h-6 rounded-full p-0.5 transition-colors ${notifications[prayer] ? "emerald-gradient" : "bg-border"
+                className={`w-10 h-6 rounded-full p-0.5 transition-colors ${notifications[prayer] ? "primary-gradient shadow-sm" : "bg-border"
                   }`}
               >
                 <motion.div
@@ -77,6 +83,42 @@ export default function SettingsPage() {
         </div>
       </motion.div>
 
+      {/* Adhan Settings */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        className="islamic-card p-4"
+      >
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-3">
+            <Bell size={20} className="text-accent" />
+            <div>
+              <p className="text-sm font-medium text-foreground">Adhan Audio</p>
+              <p className="text-xs text-muted-foreground">Play call to prayer</p>
+            </div>
+          </div>
+          <button
+            onClick={toggleAdhan}
+            className={`w-12 h-7 rounded-full p-0.5 transition-colors ${adhanEnabled ? "bg-primary" : "bg-border"}`}
+          >
+            <motion.div
+              className="w-6 h-6 rounded-full bg-card shadow-sm"
+              animate={{ x: adhanEnabled ? 20 : 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            />
+          </button>
+        </div>
+        {!isUnlocked && adhanEnabled && (
+          <button
+            onClick={unlockAudio}
+            className="w-full mt-2 py-2 px-4 rounded-xl accent-gradient text-white text-xs font-semibold shadow-sm active:scale-95 transition-transform"
+          >
+            Unlock Audio for Browser
+          </button>
+        )}
+      </motion.div>
+
       {/* Location */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -85,10 +127,12 @@ export default function SettingsPage() {
         className="islamic-card p-4"
       >
         <div className="flex items-center gap-3">
-          <MapPin size={20} className="text-gold" />
+          <MapPin size={20} className="text-accent" />
           <div>
             <p className="text-sm font-medium text-foreground">Location</p>
-            <p className="text-xs text-muted-foreground">Using device GPS for prayer times</p>
+            <p className="text-xs text-muted-foreground">
+              {location?.city ? `${location.city}, ${location.country}` : "Using device GPS for prayer times"}
+            </p>
           </div>
         </div>
       </motion.div>

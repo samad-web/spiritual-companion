@@ -77,17 +77,17 @@ export default function PrayerPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.08 }}
               className={`islamic-card p-3.5 flex items-center justify-between transition-all ${isNext ? "prayer-active" : ""
-                } ${isActive ? "border-l-4 border-l-emerald-brand" : ""}`}
+                } ${isActive ? "border-l-4 border-l-primary/70 bg-primary/5" : ""}`}
             >
               <div className="flex items-center gap-3">
                 <span className="text-xl">{prayerIcons[name]}</span>
                 <div>
                   <h3 className="font-semibold text-foreground text-sm">{name}</h3>
-                  {isActive && <span className="text-[10px] text-emerald-brand font-medium uppercase">Current</span>}
-                  {isNext && <span className="text-[10px] text-gold font-medium uppercase">Next</span>}
+                  {isActive && <span className="text-[10px] text-primary font-medium uppercase">Current</span>}
+                  {isNext && <span className="text-[10px] text-accent font-medium uppercase">Next</span>}
                 </div>
               </div>
-              <p className={`text-base font-mono ${isNext ? "text-gold font-bold" : "text-foreground"}`}>{time}</p>
+              <p className={`text-base font-mono ${isNext ? "text-accent font-bold" : "text-foreground"}`}>{time}</p>
             </motion.div>
           );
         })}

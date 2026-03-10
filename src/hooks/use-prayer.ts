@@ -4,9 +4,10 @@ interface Location {
   latitude: number;
   longitude: number;
   city?: string;
+  country?: string;
 }
 
-interface PrayerTimes {
+export interface PrayerTimes {
   Fajr: string;
   Sunrise: string;
   Dhuhr: string;
@@ -30,66 +31,91 @@ interface PrayerData {
   };
 }
 
+import { useQuery } from "@tanstack/react-query";
+
 export function useLocation() {
-  const [location, setLocation] = useState<Location | null>(null);
+  const [location, setLocation] = useState<Location | null>(() => {
+    const saved = localStorage.getItem("user-location");
+    return saved ? JSON.parse(saved) : null;
+  });
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!location);
 
   useEffect(() => {
     if (!navigator.geolocation) {
       setError("Geolocation not supported");
+      if (!location) setLocation({ latitude: 21.4225, longitude: 39.8262, city: "Mecca", country: "Saudi Arabia" });
       setLoading(false);
-      // Default to Mecca
-      setLocation({ latitude: 21.4225, longitude: 39.8262, city: "Mecca" });
       return;
     }
 
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setLocation({
-          latitude: pos.coords.latitude,
-          longitude: pos.coords.longitude,
-        });
-        setLoading(false);
-      },
-      () => {
-        // Default to Mecca
-        setLocation({ latitude: 21.4225, longitude: 39.8262, city: "Mecca" });
-        setLoading(false);
+    const fetchGeoData = async (lat: number, lng: number) => {
+      try {
+        const res = await fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+        );
+        const data = await res.json();
+        return {
+          city: data.city || data.locality || data.principalSubdivision || "Unknown City",
+          country: data.countryName || "Unknown Country",
+        };
+      } catch (err) {
+        console.error("Reverse geocoding failed", err);
+        return { city: "Unknown City", country: "Unknown Country" };
       }
-    );
+    };
+
+    const success = async (pos: GeolocationPosition) => {
+      const { latitude, longitude } = pos.coords;
+      const geoData = await fetchGeoData(latitude, longitude);
+
+      const newLoc = {
+        latitude,
+        longitude,
+        ...geoData
+      };
+
+      setLocation(newLoc);
+      localStorage.setItem("user-location", JSON.stringify(newLoc));
+      setLoading(false);
+    };
+
+    const fail = () => {
+      if (!location) {
+        const fallback = { latitude: 21.4225, longitude: 39.8262, city: "Mecca", country: "Saudi Arabia" };
+        setLocation(fallback);
+        localStorage.setItem("user-location", JSON.stringify(fallback));
+      }
+      setLoading(false);
+    };
+
+    navigator.geolocation.getCurrentPosition(success, fail, {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 0,
+    });
   }, []);
 
   return { location, error, loading };
 }
 
 export function usePrayerTimes(location: Location | null) {
-  const [prayerData, setPrayerData] = useState<PrayerData | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!location) return;
-
-    const fetchPrayers = async () => {
-      try {
-        const today = new Date();
-        const dd = String(today.getDate()).padStart(2, "0");
-        const mm = String(today.getMonth() + 1).padStart(2, "0");
-        const yyyy = today.getFullYear();
-        const res = await fetch(
-          `https://api.aladhan.com/v1/timings/${dd}-${mm}-${yyyy}?latitude=${location.latitude}&longitude=${location.longitude}&method=2`
-        );
-        const data = await res.json();
-        setPrayerData(data.data);
-      } catch {
-        console.error("Failed to fetch prayer times");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPrayers();
-  }, [location]);
+  const { data: prayerData, isLoading: loading } = useQuery({
+    queryKey: ["prayerTimes", location?.latitude, location?.longitude],
+    queryFn: async () => {
+      if (!location) return null;
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, "0");
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const yyyy = today.getFullYear();
+      const res = await fetch(
+        `https://api.aladhan.com/v1/timings/${dd}-${mm}-${yyyy}?latitude=${location.latitude}&longitude=${location.longitude}&method=2`
+      );
+      const data = await res.json();
+      return data.data as PrayerData;
+    },
+    enabled: !!location,
+  });
 
   return { prayerData, loading };
 }

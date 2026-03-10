@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Clock, BookOpen, Sparkles } from "lucide-react";
+import { Clock, BookOpen, Sparkles, MapPin } from "lucide-react";
 import { useLocation, usePrayerTimes, getCurrentPrayer } from "@/hooks/use-prayer";
 import { useTasbeeh, dhikrList } from "@/hooks/use-tasbeeh";
 import { useReminders } from "@/hooks/use-reminders";
@@ -41,10 +41,18 @@ export default function HomePage({ onNavigate }: { onNavigate: (tab: string) => 
         <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-black/30 to-black/60" />
         <div className="relative z-10 p-5 pb-6 text-white">
           <div className="flex items-center gap-2 mb-1">
-            <Sparkles size={14} className="text-gold opacity-80" />
+            <Sparkles size={14} className="text-accent opacity-80" />
             <p className="text-xs opacity-80 font-arabic">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
           </div>
-          <h1 className="font-arabic text-xl mt-1 drop-shadow-md">Assalamu Alaikum</h1>
+          <div className="flex items-baseline justify-between mt-1">
+            <h1 className="font-arabic text-xl drop-shadow-md">Assalamu Alaikum</h1>
+            {location?.city && (
+              <p className="text-[10px] opacity-80 flex items-center gap-1 font-medium bg-white/10 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/10">
+                <MapPin size={10} className="text-accent" />
+                {location.city}, {location.country}
+              </p>
+            )}
+          </div>
           {hijri && (
             <p className="text-sm mt-2 opacity-90 drop-shadow-sm">
               {hijri.day} {hijri.month.en} {hijri.year} AH
@@ -76,7 +84,7 @@ export default function HomePage({ onNavigate }: { onNavigate: (tab: string) => 
             <div className="w-12 h-12 rounded-full gold-gradient flex items-center justify-center shadow-md">
               <Clock size={20} className="text-accent-foreground" />
             </div>
-            <p className="text-[11px] text-gold mt-1 font-semibold">{prayerInfo.countdown}</p>
+            <p className="text-[11px] text-accent mt-1 font-semibold">{prayerInfo.countdown}</p>
           </div>
         </div>
       </motion.div>
@@ -96,7 +104,7 @@ export default function HomePage({ onNavigate }: { onNavigate: (tab: string) => 
             <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
               <div className="h-full gold-gradient rounded-full transition-all" style={{ width: `${tasbeeh.progress}%` }} />
             </div>
-            <span className="text-[11px] text-gold font-semibold shrink-0">{tasbeeh.count}/{tasbeeh.target}</span>
+            <span className="text-[11px] text-accent font-semibold shrink-0">{tasbeeh.count}/{tasbeeh.target}</span>
           </div>
         </motion.div>
 
@@ -114,11 +122,11 @@ export default function HomePage({ onNavigate }: { onNavigate: (tab: string) => 
           <div className="flex items-center gap-2 mt-2">
             <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
               <div
-                className="h-full emerald-gradient rounded-full transition-all"
+                className="h-full primary-gradient rounded-full transition-all"
                 style={{ width: `${reminders.length > 0 ? (completedReminders / reminders.length) * 100 : 0}%` }}
               />
             </div>
-            <span className="text-[11px] text-emerald-brand font-semibold shrink-0">Done</span>
+            <span className="text-[11px] text-accent font-semibold shrink-0">Done</span>
           </div>
         </motion.div>
       </div>
@@ -128,10 +136,10 @@ export default function HomePage({ onNavigate }: { onNavigate: (tab: string) => 
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="islamic-card p-3.5 border-l-4 border-l-gold"
+        className="islamic-card p-3.5 border-l-4 border-l-accent"
       >
         <div className="flex items-start gap-2.5">
-          <BookOpen size={16} className="text-gold mt-0.5 shrink-0" />
+          <BookOpen size={16} className="text-accent mt-0.5 shrink-0" />
           <p className="text-sm text-foreground/80 italic leading-relaxed">{quote}</p>
         </div>
       </motion.div>

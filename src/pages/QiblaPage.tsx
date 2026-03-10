@@ -82,14 +82,14 @@ export default function QiblaPage() {
             transition={{ type: "spring", stiffness: 50, damping: 15 }}
           >
             <div className="flex flex-col items-center">
-              <Navigation size={40} className="text-gold fill-gold -mt-16" />
+              <Navigation size={40} className="text-accent fill-accent -mt-16" />
               <div className="w-0.5 h-16 gold-gradient rounded-full" />
             </div>
           </motion.div>
 
           {/* Center Dot */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-4 h-4 rounded-full gold-gradient shadow-lg" />
+            <div className="w-4 h-4 rounded-full accent-gradient shadow-lg" />
           </div>
         </div>
       </motion.div>
@@ -98,17 +98,17 @@ export default function QiblaPage() {
       <div className="grid grid-cols-2 gap-3" >
         <div className="islamic-card p-4 text-center">
           <p className="text-xs text-muted-foreground">Qibla Angle</p>
-          <p className="text-2xl font-bold text-gold mt-1">{qiblaAngle.toFixed(1)}°</p>
+          <p className="text-2xl font-bold text-accent mt-1">{qiblaAngle.toFixed(1)}°</p>
         </div>
         <div className="islamic-card p-4 text-center">
           <p className="text-xs text-muted-foreground">Distance to Mecca</p>
-          <p className="text-2xl font-bold text-emerald-brand mt-1">{Math.round(distance)}</p>
+          <p className="text-2xl font-bold text-primary mt-1">{Math.round(distance)}</p>
           <p className="text-xs text-muted-foreground">km</p>
         </div>
       </div>
 
       {compassHeading === null && (
-        <div className="islamic-card p-4 border-l-4 border-l-gold">
+        <div className="islamic-card p-4 border-l-4 border-l-accent">
           <p className="text-sm text-muted-foreground">
             📱 Compass not available. The arrow shows the Qibla direction relative to North. Use a physical compass to find North.
           </p>

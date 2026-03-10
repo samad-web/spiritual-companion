@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import BottomNav from "@/components/BottomNav";
-import HomePage from "./HomePage";
-import PrayerPage from "./PrayerPage";
-import QiblaPage from "./QiblaPage";
-import TasbeehPage from "./TasbeehPage";
-import DuasPage from "./DuasPage";
-import CalendarPage from "./CalendarPage";
-import RemindersPage from "./RemindersPage";
-import SettingsPage from "./SettingsPage";
 import { useTheme } from "@/hooks/use-theme";
 
-const pages: Record<string, React.ComponentType<{ onNavigate?: (tab: string) => void }>> = {
+const HomePage = lazy(() => import("./HomePage"));
+const PrayerPage = lazy(() => import("./PrayerPage"));
+const QiblaPage = lazy(() => import("./QiblaPage"));
+const TasbeehPage = lazy(() => import("./TasbeehPage"));
+const DuasPage = lazy(() => import("./DuasPage"));
+const CalendarPage = lazy(() => import("./CalendarPage"));
+const RemindersPage = lazy(() => import("./RemindersPage"));
+const SettingsPage = lazy(() => import("./SettingsPage"));
+
+const pages: Record<string, React.LazyExoticComponent<React.ComponentType<{ onNavigate?: (tab: string) => void }>>> = {
   home: HomePage,
   prayer: PrayerPage,
   qibla: QiblaPage,
@@ -21,6 +22,12 @@ const pages: Record<string, React.ComponentType<{ onNavigate?: (tab: string) => 
   settings: SettingsPage,
 };
 
+const PageLoader = () => (
+  <div className="flex items-center justify-center h-64">
+    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+  </div>
+);
+
 const Index = () => {
   const [activeTab, setActiveTab] = useState("home");
   useTheme(); // Initialize theme
@@ -30,7 +37,9 @@ const Index = () => {
   return (
     <div className="h-screen bg-background max-w-lg mx-auto relative flex flex-col overflow-hidden">
       <div className="flex-1 overflow-y-auto pb-20">
-        <Page onNavigate={setActiveTab} />
+        <Suspense fallback={<PageLoader />}>
+          <Page onNavigate={setActiveTab} />
+        </Suspense>
       </div>
       <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
     </div>

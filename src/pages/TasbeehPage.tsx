@@ -23,8 +23,8 @@ export default function TasbeehPage() {
             key={i}
             onClick={() => selectDhikr(i)}
             className={`shrink-0 px-3 py-2 rounded-xl text-xs font-medium transition-all ${i === dhikrIndex
-                ? "emerald-gradient text-primary-foreground shadow-md"
-                : "bg-secondary text-secondary-foreground"
+              ? "primary-gradient text-primary-foreground shadow-md"
+              : "bg-secondary text-secondary-foreground"
               }`}
           >
             {dhikr.transliteration}
@@ -57,7 +57,7 @@ export default function TasbeehPage() {
             />
             <defs>
               <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="hsl(43, 85%, 40%)" />
+                <stop offset="0%" stopColor="hsl(43, 85%, 35%)" />
                 <stop offset="100%" stopColor="hsl(43, 80%, 55%)" />
               </linearGradient>
             </defs>
