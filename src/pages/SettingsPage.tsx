@@ -19,8 +19,8 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="px-4 pt-6 pb-4 space-y-5 animate-fade-in">
-      <h1 className="font-arabic text-2xl text-foreground">Settings</h1>
+    <div className="px-4 pt-4 pb-2 space-y-4 animate-fade-in">
+      <h1 className="font-arabic text-xl text-foreground">Settings</h1>
 
       {/* Theme */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="islamic-card p-4">
@@ -34,9 +34,8 @@ export default function SettingsPage() {
           </div>
           <button
             onClick={toggle}
-            className={`w-12 h-7 rounded-full p-0.5 transition-colors ${
-              isDark ? "bg-primary" : "bg-border"
-            }`}
+            className={`w-12 h-7 rounded-full p-0.5 transition-colors ${isDark ? "bg-primary" : "bg-border"
+              }`}
           >
             <motion.div
               className="w-6 h-6 rounded-full bg-card shadow-sm"
@@ -64,9 +63,8 @@ export default function SettingsPage() {
               <span className="text-sm text-foreground">{prayer}</span>
               <button
                 onClick={() => toggleNotification(prayer)}
-                className={`w-10 h-6 rounded-full p-0.5 transition-colors ${
-                  notifications[prayer] ? "emerald-gradient" : "bg-border"
-                }`}
+                className={`w-10 h-6 rounded-full p-0.5 transition-colors ${notifications[prayer] ? "emerald-gradient" : "bg-border"
+                  }`}
               >
                 <motion.div
                   className="w-5 h-5 rounded-full bg-card shadow-sm"

@@ -26,7 +26,7 @@ export default function HomePage({ onNavigate }: { onNavigate: (tab: string) => 
   const completedReminders = reminders.filter((r) => r.completed).length;
 
   return (
-    <div className="px-3 pt-4 pb-4 space-y-4 animate-fade-in">
+    <div className="px-3 pt-4 pb-2 space-y-3 animate-fade-in">
       {/* Header with Islamic Pattern */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -44,7 +44,7 @@ export default function HomePage({ onNavigate }: { onNavigate: (tab: string) => 
             <Sparkles size={14} className="text-gold opacity-80" />
             <p className="text-xs opacity-80 font-arabic">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
           </div>
-          <h1 className="font-arabic text-2xl mt-1 drop-shadow-md">Assalamu Alaikum</h1>
+          <h1 className="font-arabic text-xl mt-1 drop-shadow-md">Assalamu Alaikum</h1>
           {hijri && (
             <p className="text-sm mt-2 opacity-90 drop-shadow-sm">
               {hijri.day} {hijri.month.en} {hijri.year} AH

@@ -17,10 +17,10 @@ export default function RemindersPage() {
   const total = reminders.length;
 
   return (
-    <div className="px-4 pt-6 pb-4 space-y-5 animate-fade-in">
+    <div className="px-4 pt-4 pb-2 space-y-4 animate-fade-in">
       <div className="text-center">
-        <h1 className="font-arabic text-2xl text-foreground">Daily Reminders</h1>
-        <p className="text-sm text-muted-foreground mt-1">
+        <h1 className="font-arabic text-xl text-foreground">Daily Reminders</h1>
+        <p className="text-xs text-muted-foreground mt-0.5">
           {completed}/{total} completed today
         </p>
       </div>
@@ -61,24 +61,21 @@ export default function RemindersPage() {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.05 }}
-            className={`islamic-card p-3.5 flex items-center gap-3 transition-all ${
-              reminder.completed ? "opacity-60" : ""
-            }`}
+            className={`islamic-card p-3.5 flex items-center gap-3 transition-all ${reminder.completed ? "opacity-60" : ""
+              }`}
           >
             <button
               onClick={() => toggleReminder(reminder.id)}
-              className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-all ${
-                reminder.completed
+              className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-all ${reminder.completed
                   ? "bg-emerald-brand text-primary-foreground"
                   : "border-2 border-border"
-              }`}
+                }`}
             >
               {reminder.completed ? <Check size={14} /> : <Circle size={14} className="text-transparent" />}
             </button>
             <span
-              className={`flex-1 text-sm ${
-                reminder.completed ? "line-through text-muted-foreground" : "text-foreground"
-              }`}
+              className={`flex-1 text-sm ${reminder.completed ? "line-through text-muted-foreground" : "text-foreground"
+                }`}
             >
               {reminder.text}
             </span>

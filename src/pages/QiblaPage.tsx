@@ -42,10 +42,10 @@ export default function QiblaPage() {
   const rotation = compassHeading !== null ? qiblaAngle - compassHeading : qiblaAngle;
 
   return (
-    <div className="px-4 pt-6 pb-4 space-y-6 animate-fade-in">
+    <div className="px-4 pt-4 pb-2 space-y-4 animate-fade-in">
       <div className="text-center">
-        <h1 className="font-arabic text-2xl text-foreground">Qibla Direction</h1>
-        <p className="text-sm text-muted-foreground mt-1">Face towards the Kaaba</p>
+        <h1 className="font-arabic text-xl text-foreground">Qibla Direction</h1>
+        <p className="text-xs text-muted-foreground mt-0.5">Face towards the Kaaba</p>
       </div>
 
       {/* Compass */}
@@ -54,7 +54,7 @@ export default function QiblaPage() {
         animate={{ opacity: 1, scale: 1 }}
         className="flex justify-center"
       >
-        <div className="relative w-64 h-64">
+        <div className="relative w-56 h-56">
           {/* Compass Ring */}
           <div className="absolute inset-0 rounded-full border-4 border-border bg-card shadow-lg">
             {/* Direction Labels */}
@@ -95,7 +95,7 @@ export default function QiblaPage() {
       </motion.div>
 
       {/* Info Cards */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-3" >
         <div className="islamic-card p-4 text-center">
           <p className="text-xs text-muted-foreground">Qibla Angle</p>
           <p className="text-2xl font-bold text-gold mt-1">{qiblaAngle.toFixed(1)}°</p>

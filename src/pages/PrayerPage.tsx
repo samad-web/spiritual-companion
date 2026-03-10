@@ -34,7 +34,7 @@ export default function PrayerPage() {
   const hijri = prayerData?.date?.hijri;
 
   return (
-    <div className="px-3 pt-4 pb-4 space-y-4 animate-fade-in">
+    <div className="px-3 pt-4 pb-2 space-y-3 animate-fade-in">
       {/* Header Card with Pattern */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -49,7 +49,7 @@ export default function PrayerPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/35 to-black/60" />
         <div className="relative z-10 p-5 text-center text-white">
           <p className="text-[11px] opacity-70 uppercase tracking-wider">Next Prayer</p>
-          <h1 className="font-arabic text-3xl mt-1 drop-shadow-md">{prayerInfo.next}</h1>
+          <h1 className="font-arabic text-2xl mt-1 drop-shadow-md">{prayerInfo.next}</h1>
           <p className="text-lg opacity-90 mt-1">{prayerInfo.nextTime}</p>
           <div className="mt-3 inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5">
             <span className="text-sm font-semibold">{prayerInfo.countdown}</span>
@@ -76,9 +76,8 @@ export default function PrayerPage() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.08 }}
-              className={`islamic-card p-3.5 flex items-center justify-between transition-all ${
-                isNext ? "prayer-active" : ""
-              } ${isActive ? "border-l-4 border-l-emerald-brand" : ""}`}
+              className={`islamic-card p-3.5 flex items-center justify-between transition-all ${isNext ? "prayer-active" : ""
+                } ${isActive ? "border-l-4 border-l-emerald-brand" : ""}`}
             >
               <div className="flex items-center gap-3">
                 <span className="text-xl">{prayerIcons[name]}</span>

@@ -28,8 +28,8 @@ const Index = () => {
   const Page = pages[activeTab] || HomePage;
 
   return (
-    <div className="min-h-screen bg-background max-w-lg mx-auto relative">
-      <div className="pb-20 overflow-y-auto min-h-screen">
+    <div className="h-screen bg-background max-w-lg mx-auto relative flex flex-col overflow-hidden">
+      <div className="flex-1 overflow-y-auto pb-20">
         <Page onNavigate={setActiveTab} />
       </div>
       <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />

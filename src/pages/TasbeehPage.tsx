@@ -10,10 +10,10 @@ export default function TasbeehPage() {
   const isComplete = remaining <= 0;
 
   return (
-    <div className="px-4 pt-6 pb-4 space-y-5 animate-fade-in">
+    <div className="px-4 pt-4 pb-2 space-y-4 animate-fade-in">
       <div className="text-center">
-        <h1 className="font-arabic text-2xl text-foreground">Tasbeeh Counter</h1>
-        <p className="text-sm text-muted-foreground mt-1">Digital Dhikr Counter</p>
+        <h1 className="font-arabic text-xl text-foreground">Tasbeeh Counter</h1>
+        <p className="text-xs text-muted-foreground mt-0.5">Digital Dhikr Counter</p>
       </div>
 
       {/* Dhikr Selector */}
@@ -22,11 +22,10 @@ export default function TasbeehPage() {
           <button
             key={i}
             onClick={() => selectDhikr(i)}
-            className={`shrink-0 px-3 py-2 rounded-xl text-xs font-medium transition-all ${
-              i === dhikrIndex
+            className={`shrink-0 px-3 py-2 rounded-xl text-xs font-medium transition-all ${i === dhikrIndex
                 ? "emerald-gradient text-primary-foreground shadow-md"
                 : "bg-secondary text-secondary-foreground"
-            }`}
+              }`}
           >
             {dhikr.transliteration}
           </button>
@@ -39,7 +38,7 @@ export default function TasbeehPage() {
           whileTap={{ scale: 0.95 }}
           onClick={increment}
           disabled={isComplete}
-          className="relative w-56 h-56 rounded-full focus:outline-none"
+          className="relative w-48 h-48 rounded-full focus:outline-none"
         >
           {/* SVG Ring */}
           <svg className="absolute inset-0 -rotate-90" viewBox="0 0 200 200">

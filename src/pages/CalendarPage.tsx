@@ -21,11 +21,11 @@ export default function CalendarPage() {
   const eventsThisMonth = islamicEvents.filter((e) => e.hijriMonth === currentMonth);
 
   return (
-    <div className="px-4 pt-6 pb-4 space-y-5 animate-fade-in">
+    <div className="px-4 pt-4 pb-2 space-y-4 animate-fade-in">
       <div className="text-center">
-        <h1 className="font-arabic text-2xl text-foreground">Islamic Calendar</h1>
+        <h1 className="font-arabic text-xl text-foreground">Islamic Calendar</h1>
         {hijri && (
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-xs text-muted-foreground mt-0.5">
             {hijri.day} {hijri.month.en} {hijri.year} AH
           </p>
         )}
@@ -35,11 +35,11 @@ export default function CalendarPage() {
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="emerald-gradient rounded-2xl p-5 text-primary-foreground text-center islamic-pattern"
+        className="emerald-gradient rounded-2xl p-4 text-primary-foreground text-center islamic-pattern"
       >
-        <p className="text-sm opacity-70">Current Hijri Month</p>
-        <h2 className="font-arabic text-3xl mt-1">{hijriMonths[currentMonth - 1]}</h2>
-        <p className="text-lg opacity-90 mt-1">Day {currentDay}</p>
+        <p className="text-xs opacity-70">Current Hijri Month</p>
+        <h2 className="font-arabic text-2xl mt-1">{hijriMonths[currentMonth - 1]}</h2>
+        <p className="text-base opacity-90 mt-1">Day {currentDay}</p>
       </motion.div>
 
       {/* Month Grid */}
@@ -52,13 +52,12 @@ export default function CalendarPage() {
             return (
               <div
                 key={day}
-                className={`aspect-square flex items-center justify-center rounded-lg text-xs font-medium transition-all relative ${
-                  isToday
+                className={`aspect-square flex items-center justify-center rounded-lg text-xs font-medium transition-all relative ${isToday
                     ? "gold-gradient text-accent-foreground font-bold shadow-md"
                     : hasEvent
-                    ? "bg-primary/10 text-primary"
-                    : "text-foreground/70 hover:bg-muted"
-                }`}
+                      ? "bg-primary/10 text-primary"
+                      : "text-foreground/70 hover:bg-muted"
+                  }`}
               >
                 {day}
                 {hasEvent && !isToday && (
@@ -77,11 +76,10 @@ export default function CalendarPage() {
           {hijriMonths.map((month, i) => (
             <div
               key={month}
-              className={`px-2 py-2 rounded-lg text-xs text-center transition-all ${
-                i + 1 === currentMonth
+              className={`px-2 py-2 rounded-lg text-xs text-center transition-all ${i + 1 === currentMonth
                   ? "emerald-gradient text-primary-foreground font-semibold"
                   : "bg-secondary text-secondary-foreground"
-              }`}
+                }`}
             >
               {month}
             </div>

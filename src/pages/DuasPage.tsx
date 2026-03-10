@@ -33,7 +33,7 @@ export default function DuasPage() {
 
   return (
     <div className="px-4 pt-6 pb-4 space-y-4 animate-fade-in">
-      <h1 className="font-arabic text-2xl text-foreground">Dua Library</h1>
+      <h1 className="font-arabic text-xl text-foreground">Dua Library</h1>
 
       {/* Search */}
       <div className="relative">
@@ -52,11 +52,10 @@ export default function DuasPage() {
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-              cat === selectedCategory
+            className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${cat === selectedCategory
                 ? "emerald-gradient text-primary-foreground"
                 : "bg-secondary text-secondary-foreground"
-            }`}
+              }`}
           >
             {cat}
           </button>
