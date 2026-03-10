@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useLocation, usePrayerTimes, getCurrentPrayer } from "@/hooks/use-prayer";
 import { useState, useEffect } from "react";
+import islamicPatternBg from "@/assets/islamic-pattern-header.jpg";
 
 const prayerNames = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"] as const;
 const prayerIcons: Record<string, string> = {
@@ -33,29 +34,37 @@ export default function PrayerPage() {
   const hijri = prayerData?.date?.hijri;
 
   return (
-    <div className="px-4 pt-6 pb-4 space-y-5 animate-fade-in">
-      {/* Header Card */}
+    <div className="px-3 pt-4 pb-4 space-y-4 animate-fade-in">
+      {/* Header Card with Pattern */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="emerald-gradient rounded-2xl p-5 text-primary-foreground text-center islamic-pattern"
+        className="relative rounded-2xl overflow-hidden shadow-lg"
       >
-        <p className="text-xs opacity-70 uppercase tracking-wider">Next Prayer</p>
-        <h1 className="font-arabic text-3xl mt-1">{prayerInfo.next}</h1>
-        <p className="text-lg opacity-90 mt-1">{prayerInfo.nextTime}</p>
-        <div className="mt-3 inline-flex items-center gap-2 bg-primary-foreground/15 rounded-full px-4 py-1.5">
-          <span className="text-sm font-semibold">{prayerInfo.countdown}</span>
-          <span className="text-xs opacity-80">remaining</span>
+        <img
+          src={islamicPatternBg}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/55 via-black/35 to-black/60" />
+        <div className="relative z-10 p-5 text-center text-white">
+          <p className="text-[11px] opacity-70 uppercase tracking-wider">Next Prayer</p>
+          <h1 className="font-arabic text-3xl mt-1 drop-shadow-md">{prayerInfo.next}</h1>
+          <p className="text-lg opacity-90 mt-1">{prayerInfo.nextTime}</p>
+          <div className="mt-3 inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5">
+            <span className="text-sm font-semibold">{prayerInfo.countdown}</span>
+            <span className="text-xs opacity-80">remaining</span>
+          </div>
+          {hijri && (
+            <p className="text-xs mt-3 opacity-70">
+              {hijri.day} {hijri.month.en} {hijri.year} AH
+            </p>
+          )}
         </div>
-        {hijri && (
-          <p className="text-xs mt-3 opacity-70">
-            {hijri.day} {hijri.month.en} {hijri.year} AH
-          </p>
-        )}
       </motion.div>
 
       {/* Prayer List */}
-      <div className="space-y-3">
+      <div className="space-y-2.5">
         {prayerNames.map((name, i) => {
           const time = prayerData?.timings[name]?.replace(/\s*\(.*\)/, "") || "--:--";
           const isActive = prayerInfo.current === name;
@@ -67,19 +76,19 @@ export default function PrayerPage() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.08 }}
-              className={`islamic-card p-4 flex items-center justify-between transition-all ${
+              className={`islamic-card p-3.5 flex items-center justify-between transition-all ${
                 isNext ? "prayer-active" : ""
               } ${isActive ? "border-l-4 border-l-emerald-brand" : ""}`}
             >
               <div className="flex items-center gap-3">
-                <span className="text-2xl">{prayerIcons[name]}</span>
+                <span className="text-xl">{prayerIcons[name]}</span>
                 <div>
-                  <h3 className="font-semibold text-foreground">{name}</h3>
+                  <h3 className="font-semibold text-foreground text-sm">{name}</h3>
                   {isActive && <span className="text-[10px] text-emerald-brand font-medium uppercase">Current</span>}
                   {isNext && <span className="text-[10px] text-gold font-medium uppercase">Next</span>}
                 </div>
               </div>
-              <p className={`text-lg font-mono ${isNext ? "text-gold font-bold" : "text-foreground"}`}>{time}</p>
+              <p className={`text-base font-mono ${isNext ? "text-gold font-bold" : "text-foreground"}`}>{time}</p>
             </motion.div>
           );
         })}
