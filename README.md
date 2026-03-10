@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Spiritual Companion
 
 A personal spiritual guide application built with modern web technologies.
@@ -55,3 +56,6 @@ A personal spiritual guide application built with modern web technologies.
 ## License
 
 This project is licensed under the MIT License.
+=======
+
+>>>>>>> 96de5d158e2645bc0c3a9463a53bc9abb8b23a8c
