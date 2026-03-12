@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { type PrayerTimes } from "./use-prayer";
 
-const ADHAN_URL = "https://www.islamcan.com/adhan/makkah.mp3";
+const ADHAN_URL = "/Adhan.mp3";
 
 export function useAdhan(timings: PrayerTimes | undefined) {
     const [isEnabled, setIsEnabled] = useState(() => {
@@ -48,7 +48,7 @@ export function useAdhan(timings: PrayerTimes | undefined) {
             }
         };
 
-        const interval = setInterval(checkAdhan, 30000); // Check every 30 seconds
+        const interval = setInterval(checkAdhan, 5000); // Check every 5 seconds
         return () => clearInterval(interval);
     }, [isEnabled, timings, playAdhan]);
 

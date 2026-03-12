@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { useTheme } from "@/hooks/use-theme";
 import { useTasbeeh } from "@/hooks/use-tasbeeh";
-import { Moon, Sun, RotateCcw, MapPin, Bell } from "lucide-react";
+import { Moon, Sun, RotateCcw, MapPin, Bell, LogOut } from "lucide-react";
 import { useState } from "react";
 import { useLocation, usePrayerTimes } from "@/hooks/use-prayer";
 import { useAdhan } from "@/hooks/use-adhan";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function SettingsPage() {
   const { isDark, toggle } = useTheme();
@@ -12,6 +13,7 @@ export default function SettingsPage() {
   const { location } = useLocation();
   const { prayerData } = usePrayerTimes(location);
   const { isEnabled: adhanEnabled, toggleAdhan, isUnlocked, unlockAudio } = useAdhan(prayerData?.timings);
+  const { signOut } = useAuth();
 
   const [notifications, setNotifications] = useState(() => {
     const saved = localStorage.getItem("prayer-notifications");
@@ -151,6 +153,24 @@ export default function SettingsPage() {
           <div>
             <p className="text-sm font-medium text-foreground">Reset Tasbeeh</p>
             <p className="text-xs text-muted-foreground">Reset your Dhikr counter to zero</p>
+          </div>
+        </button>
+      </motion.div>
+
+      {/* Sign Out */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35 }}
+      >
+        <button
+          onClick={signOut}
+          className="w-full islamic-card p-4 flex items-center gap-3 text-left"
+        >
+          <LogOut size={20} className="text-destructive" />
+          <div>
+            <p className="text-sm font-medium text-foreground">Sign Out</p>
+            <p className="text-xs text-muted-foreground">Log out of your account</p>
           </div>
         </button>
       </motion.div>
